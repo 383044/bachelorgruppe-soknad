@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bachelorgruppe - Søker Samarbeid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #64748b;
+            --bg-light: #f8fafc;
+            --text-dark: #0f172a;
+            --text-light: #475569;
+            --accent: #10b981;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .intro {
+            padding: 50px 40px;
+            background: var(--bg-light);
+            text-align: center;
+        }
+
+        .intro p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .section {
+            padding: 50px 40px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 3px;
+            background: var(--accent);
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Kompetanse Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-color: var(--primary);
+        }
+
+        .skill-card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .skill-item {
+            background: var(--bg-light);
+            padding: 8px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 5px;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Team Members */
+        .team-members {
+            margin-top: 30px;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+        }
+
+        .member-header {
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .member-header:hover {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        }
+
+        .member-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .arrow {
+            transition: transform 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .member-content {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            background: var(--bg-light);
+        }
+
+        .member-content.open {
+            padding: 25px;
+            max-height: 500px;
+        }
+
+        .member-role {
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .member-skills {
+            margin-top: 15px;
+        }
+
+        .member-skill {
+            display: inline-block;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin: 3px;
+            font-size: 0.85rem;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 40px;
+        }
+
+        .contact .section-title {
+            color: white;
+        }
+
+        .contact-info {
+            margin-top: 30px;
+            font-size: 1.1rem;
+        }
+
+        .contact-info a {
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+            padding: 12px 30px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-info a:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .section { padding: 30px 20px; }
+            .skills-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Vi søker spennende bacheloroppgave!</h1>
+            <p style="font-size: 1.2rem; margin-top: 20px; position: relative; z-index: 1;">4 motiverte studenter klar for å skape verdi for din bedrift</p>
+        </header>
+
+        <section class="intro">
+            <p>
+                Vi er en gruppe på fire dataingeniørstudenter som søker en utfordrende og meningsfull bacheloroppgave for vårsemesteret 2025. 
+                Vi ønsker å samarbeide med en bedrift som kan tilby reelle problemstillinger hvor vi kan anvende vår kompetanse innen 
+                systemutvikling, dataanalyse og moderne teknologi for å skape konkrete løsninger med verdi.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Vår Kompetanse</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Frontend Utvikling</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">React</span>
+                        <span class="skill-item">Vue.js</span>
+                        <span class="skill-item">TypeScript</span>
+                        <span class="skill-item">HTML/CSS</span>
+                        <span class="skill-item">Tailwind CSS</span>
+                        <span class="skill-item">Responsive Design</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3>Backend Utvikling</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Node.js</span>
+                        <span class="skill-item">Python</span>
+                        <span class="skill-item">Java Spring</span>
+                        <span class="skill-item">REST API</span>
+                        <span class="skill-item">PostgreSQL</span>
+                        <span class="skill-item">MongoDB</span>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <h3>Andre Teknologier</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Docker</span>
+                        <span class="skill-item">Git/GitHub</span>
+                        <span class="skill-item">CI/CD</span>
+                        <span class="skill-item">Cloud (AWS/Azure)</span>
+                        <span class="skill-item">Machine Learning</span>
+                        <span class="skill-item">Agile/Scrum</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--bg-light);">
+            <h2 class="section-title">Gruppemedlemmer</h2>
+            <div class="team-members">
+                <div class="member-card">
+                    <div class="member-header" onclick="toggleMember(0)">
+                        <span class="member-name">Navn Navnesen</span>
+                        <span class="arrow" id="arrow-0">⌄</span>
+                    </div>
+                    <div class="member-content" id="member-0">
+                        <div class="member-role">Fullstack Utvikler</div>
+                        <p>Brenner for brukeropplevelse og moderne webteknologier. Erfaring med utvikling av skalerbare webapplikasjoner og interesse for skyløsninger.</p>
+                        <div class="member-skills">
+                            <span class="member-skill">React</span>
+                            <span class="member-skill">Node.js</span>
+                            <span class="member-skill">AWS</span>
+                            <span class="member-skill">UI/UX Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-header" onclick="toggleMember(1)">
+                        <span class="member-name">Kari Eksempel</span>
+                        <span class="arrow" id="arrow-1">⌄</span>
+                    </div>
+                    <div class="member-content" id="member-1">
+                        <div class="member-role">Backend Spesialist</div>
+                        <p>Fokus på systemarkitektur og database-optimalisering. Solid erfaring med API-design og mikrotjenester.</p>
+                        <div class="member-skills">
+                            <span class="member-skill">Java Spring</span>
+                            <span class="member-skill">PostgreSQL</span>
+                            <span class="member-skill">Docker</span>
+                            <span class="member-skill">REST API</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-header" onclick="toggleMember(2)">
+                        <span class="member-name">Ola Nordmann</span>
+                        <span class="arrow" id="arrow-2">⌄</span>
+                    </div>
+                    <div class="member-content" id="member-2">
+                        <div class="member-role">Data Analyst & ML Engineer</div>
+                        <p>Spesialisert innen dataanalyse og maskinlæring. Erfaring med å transformere data til verdifulle innsikter.</p>
+                        <div class="member-skills">
+                            <span class="member-skill">Python</span>
+                            <span class="member-skill">TensorFlow</span>
+                            <span class="member-skill">Data Science</span>
+                            <span class="member-skill">SQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="member-card">
+                    <div class="member-header" onclick="toggleMember(3)">
+                        <span class="member-name">Per Hansen</span>
+                        <span class="arrow" id="arrow-3">⌄</span>
+                    </div>
+                    <div class="member-content" id="member-3">
+                        <div class="member-role">DevOps Engineer</div>
+                        <p>Ekspertise innen automatisering og CI/CD. Brenner for effektive utviklingsprosesser og skalerbare infrastrukturer.</p>
+                        <div class="member-skills">
+                            <span class="member-skill">Kubernetes</span>
+                            <span class="member-skill">Jenkins</span>
+                            <span class="member-skill">Azure</span>
+                            <span class="member-skill">Terraform</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact">
+            <h2 class="section-title">Ta Kontakt</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 30px;">La oss diskutere hvordan vi kan skape verdi sammen!</p>
+            <div class="contact-info">
+                <a href="mailto:gruppe@student.no">✉ gruppe@student.no</a>
+                <a href="tel:+4712345678">📱 +47 123 45 678</a>
+                <a href="https://linkedin.com" target="_blank">💼 LinkedIn</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function toggleMember(index) {
+            const content = document.getElementById(`member-${index}`);
+            const arrow = document.getElementById(`arrow-${index}`);
+            
+            content.classList.toggle('open');
+            arrow.classList.toggle('open');
+        }
+
+        // Smooth entrance animation for skill cards
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideUp 0.6s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.skill-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Add slideUp animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
